@@ -17,6 +17,7 @@ public class GA {
     private final int population_size             = 1000;
     private final int maximum_generations         = 1000;
     private final double probability_of_crossover = 0.7;
+    private final double probability_of_mutation  = 0.7;
 
     private final double upper_bound = 10;
     private final double lower_bound = -10;
@@ -218,15 +219,17 @@ public class GA {
             random = Math.random();
             double check_mutation = Math.random();
 
-            if (random <= 0.5) y = dlxi;
-            else y = duxi;
+            if(check_mutation <= probability_of_mutation) {
+                if (random <= 0.5) y = dlxi;
+                else y = duxi;
 
-            // di(xi, t) = y.(1 - r^(((1-t)/T)^b)
-            r = Math.random();
-            b = (Math.random() * ((5 - 0.5) + 1)) + 0.5; // b = dependency Factor
-            amount_of_mutation = y * (1 - (pow(r, pow((1 - i) / maximum_generations, b))));
+                // di(xi, t) = y.(1 - r^(((1-t)/T)^b)
+                r = Math.random();
+                b = (Math.random() * ((5 - 0.5) + 1)) + 0.5; // b = dependency Factor
+                amount_of_mutation = y * (1 - (pow(r, pow((1 - i) / maximum_generations, b))));
 
-            chromosome.set(j, xi + amount_of_mutation);
+                chromosome.set(j, xi + amount_of_mutation);
+            }
         }
     }
 
